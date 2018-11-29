@@ -36,4 +36,10 @@ public class DaoTest extends BaseTest {
         Thread.sleep(1000000000l);
     }
 
+
+    @Test
+    public void notAutoCommit() throws Exception{
+        jdbcTemplateDemo.update_session_1();
+        Thread.sleep(1000000000l);
+    }
 }

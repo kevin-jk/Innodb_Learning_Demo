@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,9 @@ import java.util.UUID;
 public class JdbcTemplateDemo {
     @Resource
     JdbcTemplate jdbcTemplate;
+
+    @Resource
+    JdbcTemplate jdbcTemplate1;
 
     public void test() {
         String sql = "select * from user_info";
@@ -36,6 +40,7 @@ public class JdbcTemplateDemo {
         }
     }
 
+    //select for update 只能在事务中
     @Transactional
     public void addUserVersionBySafe(){
         String sql = "select * from user_info where user_id=1 for UPDATE ";
@@ -79,5 +84,32 @@ public class JdbcTemplateDemo {
           System.out.println(e);
         }
         System.out.println("Thread "+Thread.currentThread().getName()+" insert data success.");
+    }
+
+
+    public void update_session_1() {
+        Connection connection = null;
+        try{
+
+            String sql = "update user_info set version=version+1 where id=?";
+            jdbcTemplate1.update(sql,1);
+            //connection.commit();
+        }catch (Exception e){
+            System.out.println(e);
+            try{
+                connection.rollback();
+            }catch (Exception ex){
+
+            }
+
+        }
+    }
+
+    public void update_session_2(){
+
+    }
+
+    private void setNotAutoCommit(boolean autoCommit) throws Exception{
+
     }
 }
