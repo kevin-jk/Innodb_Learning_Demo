@@ -25,6 +25,11 @@ public class JdbcTemplateDemo {
     @Resource
     JdbcTemplate jdbcTemplate1;
 
+    @Resource
+    JdbcTemplate jdbcTemplate2;
+
+
+
     public void test() {
         String sql = "select * from user_info";
         List<Map<String, Object>> res = jdbcTemplate.queryForList(sql);
@@ -41,9 +46,9 @@ public class JdbcTemplateDemo {
     }
 
     //select for update 只能在事务中
-    @Transactional
+@Transactional
     public void addUserVersionBySafe(){
-        String sql = "select * from user_info where user_id=1 for UPDATE ";
+        String sql = "select * from user_info where user_id=1";
         Map<String,Object> res = jdbcTemplate.queryForMap(sql);
         if(null!=res&&null!=res.get("version")){
             String update = "update user_info set version=? where id=?";
@@ -105,11 +110,12 @@ public class JdbcTemplateDemo {
         }
     }
 
-    public void update_session_2(){
-
-    }
-
-    private void setNotAutoCommit(boolean autoCommit) throws Exception{
-
-    }
+   public void deadLock(String date,String nodeId){
+       String sql = "update golden_eye_ivr_selfhelp_report set data_status='0' where report_date=? and node_id=?";
+       try{
+           jdbcTemplate2.update(sql,date,nodeId);
+       }catch (Exception e){
+           System.out.println(e);
+       }
+   }
 }

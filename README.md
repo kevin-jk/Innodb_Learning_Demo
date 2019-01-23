@@ -33,7 +33,8 @@ set @@autocommit=0;
 
     1.2 start transaction;
 
-    1.3 insert INTO `user_info` (`user_id`, `name`, `femal`, `address`, `data_status`,`created_data`, `created`, `modified_data`, `modified`, `version`) VALUES (201811272001,'201811272001',1,'addr','1',now(),'sys',now(),'sys',1);
+    1.3 
+    insert INTO `user_info` (`user_id`, `name`, `femal`, `address`, `data_status`,`created_data`, `created`, `modified_data`, `modified`, `version`) VALUES (201811272001,'201811272001',1,'addr','1',now(),'sys',now(),'sys',1);
 
     1.4 commit
 
@@ -46,7 +47,22 @@ set @@autocommit=0;
 - READ UNCOMMITED
 
     同样的上述实验步骤，在2.1的时候有数据返回。即会话2读取到了未提交的数据。
-    
+
+
+GAP锁验证：
+
+1. 设置隔离级别为RR
+set session tx_isolation=‘REPEATABLE-READ’;
+
+2. Session 1.
+
+ update user_info set femal='1' where name = 3; 
+ 
+ 其中name 为非唯一索引， 此时记录name还有1,6，8
+ 
+3. Session 2.
+ 以上可知，gap锁有（1,3），（3.6）。 因此插入记录name=2， 或者name=4, 5 即可以验证
+ 
 # 笔记
 http://note.youdao.com/noteshare?id=d0ba36c281e02d59aace92a7ba8db8e0&sub=66D956EC3958469196CB4F4A738D1EF9
     
