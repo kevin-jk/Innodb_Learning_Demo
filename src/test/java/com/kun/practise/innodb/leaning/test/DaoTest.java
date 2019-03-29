@@ -49,11 +49,11 @@ public class DaoTest extends BaseTest {
     @Test
     public void deadLock() throws Exception {
         List<List> nodeIdLists = new ArrayList<>();
-        List list1 = Arrays.asList(new String[]{"P110.1","P111.1","P111.1809","P112.1809","P114.1809","P114.2"});
-        List list2 = Arrays.asList(new String[]{"P115.1","P12.1809","P12.2","P141.1809","P151.2","P171.1"});
-        List list3 = Arrays.asList(new String[]{"P21.1","P31.1","P311.1809","P312.1809","P32.1","P322.1809","P72.1809"});
-        List list4 = Arrays.asList(new String[]{"P34.1809","P36.1809","P41.1809","P52.1809","P611.1","P611.1809","P63.1809"});
-        List list5 = Arrays.asList(new String[]{"P612.1809","P613.1809","P6141.1809","P6142.1809","P6143.1809","P6144.1809","P7.2"});
+        List list1 = Arrays.asList(new String[]{"S11012.1","S111.1","P111.1809","P112.1809","P114.1809","P114.2"});
+        List list2 = Arrays.asList(new String[]{"P1115.1","S12","P12.2","P141.1809","P151.2","P171.1"});
+        List list3 = Arrays.asList(new String[]{"P211.1","P31.1","S311","P312.1809","P32.1","P322.1809","P72.1809"});
+        List list4 = Arrays.asList(new String[]{"P314.1809","P36.1809","P41.1809","P52.1809","P611.1","P611.1809","P63.1809"});
+        List list5 = Arrays.asList(new String[]{"P6112.1809","P613.1809","P6141.1809","P6142.1809","P6143.1809","P6144.1809","P7.2"});
         nodeIdLists.add(list1);
         nodeIdLists.add(list2);
         nodeIdLists.add(list3);

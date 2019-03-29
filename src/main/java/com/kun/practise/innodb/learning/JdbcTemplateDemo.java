@@ -111,7 +111,7 @@ public class JdbcTemplateDemo {
     }
 
    public void deadLock(String date,String nodeId){
-       String sql = "update golden_eye_ivr_selfhelp_report set data_status='0' where report_date=? and node_id=?";
+       String sql = "update biz_table_1 set data_status='0' where biz_date=? and id=?";
        try{
            jdbcTemplate2.update(sql,date,nodeId);
        }catch (Exception e){
